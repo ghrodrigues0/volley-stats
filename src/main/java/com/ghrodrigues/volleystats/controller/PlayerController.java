@@ -1,7 +1,7 @@
 package com.ghrodrigues.volleystats.controller;
 
 import com.ghrodrigues.volleystats.model.Player;
-import com.ghrodrigues.volleystats.repository.PlayerRepository;
+import com.ghrodrigues.volleystats.service.PlayerService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,26 +13,26 @@ import java.util.List;
 @RequestMapping("/api/players")
 public class PlayerController {
 
-  private final PlayerRepository repository;
+  private final PlayerService service;
 
-  public PlayerController(PlayerRepository repository) {
-    this.repository = repository;
+  public PlayerController(PlayerService service) {
+    this.service = service;
   }
 
   @GetMapping
   public List<Player> getAll() {
-    return repository.findAll();
+    return service.findAll();
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<Player> getById(@PathVariable Long id) {
-    return repository.findById(id)
+    return service.findById(id)
         .map(player -> ResponseEntity.ok(player))
         .orElse(ResponseEntity.notFound().build());
   }
 
   @PostMapping
   public ResponseEntity<Player> create(@RequestBody Player player) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(player));
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(player));
   }
 }
