@@ -3,8 +3,9 @@ package com.ghrodrigues.volleystats.controller;
 import com.ghrodrigues.volleystats.model.Player;
 import com.ghrodrigues.volleystats.service.PlayerService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +34,12 @@ public class PlayerController {
   }
 
   @PostMapping
-  public ResponseEntity<Player> create(@RequestBody Player player) {
+  public ResponseEntity<Player> create(@Valid @RequestBody Player player) {
     return ResponseEntity.status(HttpStatus.CREATED).body(service.create(player));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Player> update(@PathVariable Long id, @RequestBody Player player) {
+  public ResponseEntity<Player> update(@PathVariable Long id, @Valid @RequestBody Player player) {
     return service.update(id, player)
         .map(updated -> ResponseEntity.ok(updated))
         .orElse(ResponseEntity.notFound().build());

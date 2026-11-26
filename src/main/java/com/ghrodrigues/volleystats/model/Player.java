@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Player {
@@ -12,7 +15,17 @@ public class Player {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String name, position, team;
+  @NotBlank
+  private String name;
+
+  @NotBlank
+  private String position;
+
+  @NotBlank
+  private String team;
+
+  @Min(1)
+  @Max(99)
   private int jerseyNumber;
 
   public Player(String name, String position, String team, int jerseyNumber) {
