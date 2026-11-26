@@ -27,4 +27,22 @@ public class PlayerService {
   public Player create(Player player) {
     return repository.save(player);
   }
+
+  public Optional<Player> update(Long id, Player data) {
+    return findById(id).map(existing -> {
+      existing.setName(data.getName());
+      existing.setPosition(data.getPosition());
+      existing.setJerseyNumber(data.getJerseyNumber());
+      existing.setTeam(data.getTeam());
+      return repository.save(existing);
+    });
+  }
+
+  public boolean delete(Long id) {
+    if (repository.existsById(id)) {
+      repository.deleteById(id);
+      return true;
+    }
+    return false;
+  }
 }
