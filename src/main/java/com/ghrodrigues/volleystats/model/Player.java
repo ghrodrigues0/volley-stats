@@ -15,17 +15,17 @@ public class Player {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
+  @NotBlank(message = "name is required")
   private String name;
 
-  @NotBlank
+  @NotBlank(message = "position is required")
   private String position;
 
-  @NotBlank
+  @NotBlank(message = "team is required")
   private String team;
 
-  @Min(1)
-  @Max(99)
+  @Min(value = 1, message = "jerseyNumber must be between 1 and 99")
+  @Max(value = 99, message = "jerseyNumber must be between 1 and 99")
   private int jerseyNumber;
 
   public Player(String name, String position, String team, int jerseyNumber) {
